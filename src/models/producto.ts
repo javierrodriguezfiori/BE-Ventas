@@ -13,7 +13,8 @@ export interface IProducto extends Document {
   stock: Number,
   vendedor: String,
   metodosDePago: IMetodosDePago,
-  isActivo: Boolean
+  isActivo: Boolean,
+  isVendido: Boolean,
 };
 
 export const ProductoSchema = new Schema({

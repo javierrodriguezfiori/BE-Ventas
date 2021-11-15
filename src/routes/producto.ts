@@ -89,9 +89,9 @@ const router = express.Router()
  *                  $ref: '#/components/schemas/Producto'
  *    responses:
  *      200:
- *         description: El pedido se creó correctamente
+ *         description: El producto se creó correctamente
  *      500:   
- *        description: No se pudo crear el pedido
+ *        description: No se pudo crear el producto
  */
 //#endregion
 router.get('/api/v1/producto', saveProducto)
