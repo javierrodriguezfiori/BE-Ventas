@@ -1,5 +1,5 @@
 import express from 'express'
-import { savePedido, findPedidosByComprador } from '../controllers/pedido'
+import { updatePedido } from '../controllers/pedido'
 
 const router = express.Router()
 
@@ -48,12 +48,13 @@ const router = express.Router()
  */
 //#endregion
 
-//#region Swagger savePedido
+/*Por cada venta pegarle al PUT: producto y actualizar el isVendido a true*/
+//#region Swagger updatePedido
 /**
  * @swagger
  * /api/v1/pedido:
- *   post:
- *     summary: Genera un pedido nuevo
+ *   put:
+ *     summary: Actualiza un pedido
  *     tags: [Pedido]
  *     requestBody:
  *       required: true
@@ -63,38 +64,13 @@ const router = express.Router()
  *             $ref: '#/components/schemas/Pedido'
  *     responses:
  *       200:
- *         description: El pedido se creo correctamente
+ *         description: El pedido se actualizó correctamente
+ *       404:
+ *         description: El pedido no existe
  *       500:
- *         description: No se pudo crear el pedido
+ *         description: No se pudo actualizar el pedido
  */
 //#endregion
-router.post('/api/v1/pedido', savePedido)
-
-//#region Swagger findProductos
-/**
- * @swagger
- * /api/v1/pedido/{comprador}:
- *  get:
- *    summary: Trae todos los pedidos del usuario.
- *    tags: [Pedido]
- *    parameters:
- *      - in: path
- *        name: comprador
- *        schema:
- *          type: string
- *        required: true
- *        description: Nombre de usuario del comprador
- *    responses:
- *      200:
- *        description: Pedidos obtenidos
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Pedido'
- */
-//#endregion
-router.get('/api/v1/pedido/:comprador', findPedidosByComprador)
+router.put('/api/v1/pedido', updatePedido)
 
 export default router

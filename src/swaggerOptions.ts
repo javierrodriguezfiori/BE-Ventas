@@ -2,13 +2,13 @@ export const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'BE-Compras',
+      title: 'BE-Ventas',
       version: '1.0.0',
-      description: 'Es el microservicio encargado del modulo de compras.',
+      description: 'Es el microservicio encargado del modulo de ventas.',
     },
     servers: [
       {
-        url: 'http://localhost:8081',
+        url: 'http://localhost:8082',
       },
     ],
   },

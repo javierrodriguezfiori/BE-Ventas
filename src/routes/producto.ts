@@ -1,6 +1,6 @@
 import express from 'express'
-import { findProductos, updateProducto } from '../controllers/producto'
-import healthController from '../controllers/health'
+import { saveProducto, updateProducto, findProductosByVendedor } from '../controllers/producto'
+// import healthController from '../controllers/health'
 
 const router = express.Router()
 
@@ -73,26 +73,30 @@ const router = express.Router()
  */
 //#endregion
 
-//#region Swagger findProductos
+// POST: Producto. idProducto: string. isVendido e isActivo default false
+//#region Swagger saveProducto
 /**
  * @swagger
  * /api/v1/producto:
- *  get:
- *    summary: Trae todos los productos que son posibles de comprar (con stock mayor a 0 y activos de parte del vendedor).
+ *  post:
+ *    summary: Genera un producto nuevo
  *    tags: [Producto]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *          application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Producto'
  *    responses:
  *      200:
- *        description: Productos obtenidos
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Producto'
+ *         description: El pedido se creó correctamente
+ *      500:   
+ *        description: No se pudo crear el pedido
  */
 //#endregion
-router.get('/api/v1/producto', findProductos)
+router.get('/api/v1/producto', saveProducto)
 
+// PUT: Producto. Validar stock. 
 //#region Swagger updateProducto
 /**
  * @swagger
@@ -108,7 +112,7 @@ router.get('/api/v1/producto', findProductos)
  *             $ref: '#/components/schemas/Producto'
  *     responses:
  *       200:
- *         description: El producto se actualizo correctamente
+ *         description: El producto se actualizó correctamente
  *       404:
  *         description: El producto no existe
  *       500:
@@ -117,6 +121,33 @@ router.get('/api/v1/producto', findProductos)
 //#endregion
 router.put('/api/v1/producto', updateProducto)
 
-router.get('/health', healthController.healthCheck)
+//#region Swagger findProductos
+/**
+ * @swagger
+ * /api/v1/producto/{vendedor}:
+ *  get:
+ *    summary: Trae todos los productos de ese vendedor
+ *    tags: [Producto]
+ *    parameters:
+ *      - in: path
+ *        name: vendedor
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Nombre de usuario del vendedor
+ *    responses:
+ *      200:
+ *        description: Productos obtenidos
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Producto'
+ *      404:
+ *        description: No existen productos de ese vendedor
+ */
+//#endregion
+router.get('/api/v1/producto', findProductosByVendedor)
 
 export default router
